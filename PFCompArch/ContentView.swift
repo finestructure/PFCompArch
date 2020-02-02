@@ -9,17 +9,34 @@
 import CompArch
 import SwiftUI
 
+typealias Item = Int
+
 struct AppState {
-    var items: [Int]
+    var items: [Item]
     func total() -> Int { items.reduce(0, +) }
+    var cells: [CellState] {
+        get { items.map(CellState.init) }
+        set { items = newValue.map { $0.item } }
+    }
 }
 
 enum AppAction {
-    case cell(CellAction)
+    case cell(Indexed<CellAction>)
+
+    var cell: Indexed<CellAction>? {
+        get {
+            guard case let .cell(value) = self else { return nil }
+            return value
+        }
+        set {
+            guard case .cell = self, let newValue = newValue else { return }
+            self = .cell(newValue)
+        }
+    }
 }
 
 struct CellState {
-    var item: Int
+    var item: Item
 }
 enum CellAction {
     case plusTapped
@@ -62,27 +79,25 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("Total: \(store.value.total())")
-            ForEach(store.value.items, id: \.self) { item in
+            ForEach(store.value.items.indices, id: \.self) { idx in
                 Cell(store: self.store.view(value: { (appState) -> CellState in
-                    // normally we'd project out from appState but we can't,
-                    // because it depends on the list index - using item directly instead
-                    .init(item: item)
+                    appState.cells[idx]
                 }, action: { (cellAction) -> AppAction in
-                    .cell(cellAction)
+                    .cell(Indexed(index: idx, value: cellAction))
                 })
             )}
         }
     }
 }
 
-let appReducer: Reducer<AppState, AppAction> = pullback(
-    cellReducer,
-    value: ???,  // requires key path from AppState to a specific CellState[idx] but we don't have idx!
-    action: WritableKeyPath<GlobalAction, LocalAction?>
-)
+
+let appReducer: Reducer<AppState, AppAction> =
+    indexed(reducer: cellReducer, \.cells, \.cell)
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(store: .init(initialValue: .init(items: [1, 2, 3]), reducer: appReducer))
     }
 }
+

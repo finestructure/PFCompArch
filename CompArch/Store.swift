@@ -102,3 +102,36 @@ public func logging<Value, Action>(_ reducer: @escaping Reducer<Value, Action>) 
               }] + effects
     }
 }
+
+
+// See https://github.com/pointfreeco/episode-code-samples/issues/33 for details
+
+public struct Indexed<Value> {
+    public var index: Int
+    public var value: Value
+
+    public init(index: Int, value: Value) {
+        self.index = index
+        self.value = value
+    }
+}
+
+
+public func indexed<State, Action, GlobalState, GlobalAction>(
+    reducer: @escaping Reducer<State, Action>,
+    _ stateKeyPath: WritableKeyPath<GlobalState, [State]>,
+    _ actionKeyPath: WritableKeyPath<GlobalAction, Indexed<Action>?>
+) -> Reducer<GlobalState, GlobalAction> {
+    return { globalValue, globalAction in
+        guard let localAction = globalAction[keyPath: actionKeyPath] else { return [] }
+        let index = localAction.index
+        let localEffects = reducer(&globalValue[keyPath: stateKeyPath][index], localAction.value)
+        return localEffects.map { localEffect in
+            localEffect.map { localAction in
+                var globalAction = globalAction
+                globalAction[keyPath: actionKeyPath] = Indexed(index: index, value: localAction)
+                return globalAction
+            }.eraseToEffect()
+        }
+    }
+}
