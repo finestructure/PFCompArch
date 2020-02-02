@@ -9,11 +9,21 @@
 import CompArch
 import SwiftUI
 
-typealias Item = Int
+struct Item: Identifiable {
+    let id: UUID
+    var value: Int
+}
+
+extension Item: ExpressibleByIntegerLiteral {
+    init(integerLiteral value: Int) {
+        self.id = UUID()
+        self.value = value
+    }
+}
 
 struct AppState {
     var items: [Item]
-    func total() -> Int { items.reduce(0, +) }
+    func total() -> Int { items.reduce(0, { $0 + $1.value }) }
     var cells: [CellState] {
         get { items.map(CellState.init) }
         set { items = newValue.map { $0.item } }
@@ -21,9 +31,9 @@ struct AppState {
 }
 
 enum AppAction {
-    case cell(Indexed<CellAction>)
+    case cell(Identified<CellState, CellAction>)
 
-    var cell: Indexed<CellAction>? {
+    var cell: Identified<CellState, CellAction>? {
         get {
             guard case let .cell(value) = self else { return nil }
             return value
@@ -35,7 +45,8 @@ enum AppAction {
     }
 }
 
-struct CellState {
+struct CellState: Identifiable {
+    var id: UUID { item.id }
     var item: Item
 }
 enum CellAction {
@@ -45,10 +56,10 @@ enum CellAction {
 let cellReducer: Reducer<CellState, CellAction> = { state, action in
     switch action {
         case .plusTapped:
-            state.item += 1
+            state.item.value += 1
             return []
         default:
-            state.item -= 1
+            state.item.value -= 1
             return []
     }
 }
@@ -63,7 +74,7 @@ struct Cell: View {
             }) {
                 Image(systemName: "minus.circle.fill")
             }
-            Text("\(store.value.item)").frame(width: 30)
+            Text("\(store.value.item.value)").frame(width: 30)
             Button(action: {
                 self.store.send(.plusTapped)
             }) {
@@ -79,20 +90,19 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text("Total: \(store.value.total())")
-            ForEach(store.value.items.indices, id: \.self) { idx in
-                Cell(store: self.store.view(value: { (appState) -> CellState in
-                    appState.cells[idx]
-                }, action: { (cellAction) -> AppAction in
-                    .cell(Indexed(index: idx, value: cellAction))
-                })
+            ForEach(store.value.cells) { cell in
+                Cell(store: self.store.view(value: { $0.cells.first(where: { $0.id == cell.id })! },
+                                            action: { .cell(Identified(id: cell.id, action: $0)) }
+                    )
             )}
         }
     }
 }
 
-
+let stateKP = \AppState.cells
+let actionKP = \AppAction.cell
 let appReducer: Reducer<AppState, AppAction> =
-    indexed(reducer: cellReducer, \.cells, \.cell)
+    identified(reducer: cellReducer, \AppState.cells, \AppAction.cell)
 
 
 struct ContentView_Previews: PreviewProvider {
