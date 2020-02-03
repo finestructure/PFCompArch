@@ -14,16 +14,16 @@ extension IndexedView {
     struct State {
         var items: [Item]
         func total() -> Int { items.reduce(0, { $0 + $1.value }) }
-        var cells: [CellState] {
-            get { items.map(CellState.init) }
+        var cells: [CellView.State] {
+            get { items.map(CellView.State.init) }
             set { items = newValue.map { $0.item } }
         }
     }
 
     enum Action {
-        case cell(Indexed<CellAction>)
+        case cell(Indexed<CellView.Action>)
 
-        var cell: Indexed<CellAction>? {
+        var cell: Indexed<CellView.Action>? {
             get {
                 guard case let .cell(value) = self else { return nil }
                 return value
@@ -36,7 +36,7 @@ extension IndexedView {
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
-        indexed(reducer: cellReducer, \.cells, \.cell)
+        indexed(reducer: CellView.reducer, \.cells, \.cell)
     }
 }
 

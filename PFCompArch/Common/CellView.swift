@@ -10,46 +10,36 @@ import CompArch
 import SwiftUI
 
 
-struct Item: Identifiable {
-    let id: UUID
-    var value: Int
-}
-
-
-extension Item: ExpressibleByIntegerLiteral {
-    init(integerLiteral value: Int) {
-        self.id = UUID()
-        self.value = value
+extension CellView {
+    struct State: Identifiable {
+        var id: UUID { item.id }
+        var item: Item
     }
-}
 
 
-struct CellState: Identifiable {
-    var id: UUID { item.id }
-    var item: Item
-}
+    enum Action {
+        case plusTapped
+        case minusTapped
+    }
 
 
-enum CellAction {
-    case plusTapped
-    case minusTapped
-}
-
-
-let cellReducer: Reducer<CellState, CellAction> = { state, action in
-    switch action {
-        case .plusTapped:
-            state.item.value += 1
-            return []
-        default:
-            state.item.value -= 1
-            return []
+    static var reducer: Reducer<State, Action> {
+        return { state, action in
+            switch action {
+                case .plusTapped:
+                    state.item.value += 1
+                    return []
+                default:
+                    state.item.value -= 1
+                    return []
+            }
+        }
     }
 }
 
 
 struct CellView: View {
-    @ObservedObject var store: Store<CellState, CellAction>
+    @ObservedObject var store: Store<State, Action>
 
     var body: some View {
         HStack {

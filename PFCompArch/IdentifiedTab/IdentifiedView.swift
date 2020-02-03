@@ -14,16 +14,16 @@ extension IdentifiedView {
     struct State {
         var items: [Item]
         func total() -> Int { items.reduce(0, { $0 + $1.value }) }
-        var cells: [CellState] {
-            get { items.map(CellState.init) }
+        var cells: [CellView.State] {
+            get { items.map(CellView.State.init) }
             set { items = newValue.map { $0.item } }
         }
     }
 
     enum Action {
-        case cell(Identified<CellState, CellAction>)
+        case cell(Identified<CellView.State, CellView.Action>)
 
-        var cell: Identified<CellState, CellAction>? {
+        var cell: Identified<CellView.State, CellView.Action>? {
             get {
                 guard case let .cell(value) = self else { return nil }
                 return value
@@ -36,10 +36,9 @@ extension IdentifiedView {
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
-        identified(reducer: cellReducer, \.cells, \.cell)
+        identified(reducer: CellView.reducer, \.cells, \.cell)
     }
 }
-
 
 
 struct IdentifiedView: View {
