@@ -89,6 +89,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
+            Text("Identified").font(.title)
             Text("Total: \(store.value.total())")
             ForEach(store.value.cells) { cell in
                 Cell(store: self.store.view(value: { $0.cells.first(where: { $0.id == cell.id })! },
