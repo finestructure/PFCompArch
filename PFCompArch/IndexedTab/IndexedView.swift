@@ -10,7 +10,7 @@ import CompArch
 import SwiftUI
 
 
-typealias AppState2 = AppState1
+typealias AppState2 = IdentifiedView.State
 
 
 enum AppAction2 {

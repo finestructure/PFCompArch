@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView(
-            store1: .init(initialValue: .init(items: [1, 2, 3]), reducer: appReducer1),
+            identifiedViewStore: Sample.identifiedViewStore,
             store2: .init(initialValue: .init(items: [2, 3, 4]), reducer: appReducer2)
         )
 

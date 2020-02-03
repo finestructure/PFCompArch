@@ -11,12 +11,12 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @ObservedObject var store1: Store<AppState1, AppAction1>
+    @ObservedObject var identifiedViewStore: Store<IdentifiedView.State, IdentifiedView.Action>
     @ObservedObject var store2: Store<AppState2, AppAction2>
 
     var body: some View {
         TabView {
-            IdentifiedView(store1: self.store1).tabItem {
+            IdentifiedView(store: self.identifiedViewStore).tabItem {
                 Image(systemName: "faceid")
                 Text("Identified")
             }
@@ -29,11 +29,13 @@ struct ContentView: View {
 }
 
 
+struct Sample {}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
-            store1: .init(initialValue: .init(items: [1, 2, 3]), reducer: appReducer1),
+            identifiedViewStore: Sample.identifiedViewStore,
             store2: .init(initialValue: .init(items: [2, 3, 4]), reducer: appReducer2)
         )
     }
