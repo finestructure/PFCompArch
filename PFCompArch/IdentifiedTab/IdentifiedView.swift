@@ -53,7 +53,7 @@ struct IdentifiedView: View {
             Text("Total: \(store.value.total())")
             ForEach(store.value.cells) { cell in
                 CellView(store: self.store.view(value: { $0.cells.first(where: { $0.id == cell.id })! },
-                                                 action: { .cell(Identified(id: cell.id, action: $0)) }
+                                                action: { .cell(Identified(id: cell.id, action: $0)) }
                     )
                 )}
         }

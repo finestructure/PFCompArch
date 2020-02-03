@@ -12,7 +12,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var identifiedViewStore: Store<IdentifiedView.State, IdentifiedView.Action>
-    @ObservedObject var store2: Store<AppState2, AppAction2>
+    @ObservedObject var indexedViewStore: Store<IndexedView.State, IndexedView.Action>
 
     var body: some View {
         TabView {
@@ -20,7 +20,7 @@ struct ContentView: View {
                 Image(systemName: "faceid")
                 Text("Identified")
             }
-            IndexedView(store2: self.store2).tabItem {
+            IndexedView(store: self.indexedViewStore).tabItem {
                 Image(systemName: "increase.indent")
                 Text("Indexed")
             }
@@ -36,7 +36,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(
             identifiedViewStore: Sample.identifiedViewStore,
-            store2: .init(initialValue: .init(items: [2, 3, 4]), reducer: appReducer2)
+            indexedViewStore: Sample.indexedViewStore
         )
     }
 }
