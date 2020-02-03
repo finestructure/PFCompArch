@@ -135,3 +135,37 @@ public func indexed<State, Action, GlobalState, GlobalAction>(
         }
     }
 }
+
+
+public struct Identified<Value: Identifiable, Action> {
+    public var id: Value.ID
+    public var action: Action
+
+    public init(id: Value.ID, action: Action) {
+        self.id = id
+        self.action = action
+    }
+}
+
+
+public func identified<State: Identifiable, Action, GlobalState, GlobalAction>(
+    reducer: @escaping Reducer<State, Action>,
+    _ stateKeyPath: WritableKeyPath<GlobalState, [State]>,
+    _ actionKeyPath: WritableKeyPath<GlobalAction, Identified<State, Action>?>
+) -> Reducer<GlobalState, GlobalAction> {
+    return { globalValue, globalAction in
+        guard let localAction = globalAction[keyPath: actionKeyPath] else { return [] }
+        let id = localAction.id
+        guard let index = globalValue[keyPath: stateKeyPath].firstIndex(where: { $0.id == id }) else { return [] }
+        let localEffects = reducer(&globalValue[keyPath: stateKeyPath][index], localAction.action)
+        return localEffects.map { localEffect in
+            localEffect.map { localAction in
+                var globalAction = globalAction
+                globalAction[keyPath: actionKeyPath] = Identified(id: id, action: localAction)
+                return globalAction
+            }.eraseToEffect()
+        }
+    }
+}
+
+
