@@ -20,7 +20,6 @@ extension IdentifiedView {
         }
     }
 
-
     enum Action {
         case cell(Identified<CellState, CellAction>)
 
@@ -36,8 +35,7 @@ extension IdentifiedView {
         }
     }
 
-
-    static var reducer: Reducer<State, Action> {
+    static fileprivate var reducer: Reducer<State, Action> {
         identified(reducer: cellReducer, \.cells, \.cell)
     }
 }

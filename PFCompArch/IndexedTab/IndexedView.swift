@@ -11,7 +11,14 @@ import SwiftUI
 
 
 extension IndexedView {
-    typealias State = IdentifiedView.State
+    struct State {
+        var items: [Item]
+        func total() -> Int { items.reduce(0, { $0 + $1.value }) }
+        var cells: [CellState] {
+            get { items.map(CellState.init) }
+            set { items = newValue.map { $0.item } }
+        }
+    }
 
     enum Action {
         case cell(Indexed<CellAction>)
@@ -28,7 +35,7 @@ extension IndexedView {
         }
     }
 
-    static var reducer: Reducer<State, Action> {
+    static fileprivate var reducer: Reducer<State, Action> {
         indexed(reducer: cellReducer, \.cells, \.cell)
     }
 }

@@ -11,16 +11,13 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @ObservedObject var identifiedViewStore: Store<IdentifiedView.State, IdentifiedView.Action>
-    @ObservedObject var indexedViewStore: Store<IndexedView.State, IndexedView.Action>
-
     var body: some View {
         TabView {
-            IdentifiedView(store: self.identifiedViewStore).tabItem {
+            IdentifiedView(store: Sample.identifiedViewStore).tabItem {
                 Image(systemName: "faceid")
                 Text("Identified")
             }
-            IndexedView(store: self.indexedViewStore).tabItem {
+            IndexedView(store: Sample.indexedViewStore).tabItem {
                 Image(systemName: "increase.indent")
                 Text("Indexed")
             }
@@ -34,10 +31,7 @@ struct Sample {}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(
-            identifiedViewStore: Sample.identifiedViewStore,
-            indexedViewStore: Sample.indexedViewStore
-        )
+        ContentView()
     }
 }
 
