@@ -59,8 +59,11 @@ struct CellView: View {
 }
 
 
-//struct CellView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CellView()
-//    }
-//}
+struct CellView_Previews: PreviewProvider {
+    static var previews: some View {
+        CellView(
+            store: .init(initialValue: .init(item: 3),
+                         reducer: CellView.reducer)
+        )
+    }
+}
