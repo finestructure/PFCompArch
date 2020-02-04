@@ -21,6 +21,7 @@ extension ListView {
 
     enum Action {
         case cell(Identified<CellView.State, CellView.Action>)
+        case delete(IndexSet)
 
         var cell: Identified<CellView.State, CellView.Action>? {
             get {
@@ -35,7 +36,17 @@ extension ListView {
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
-        identified(reducer: CellView.reducer, \.cells, \.cell)
+        let detailReducer: Reducer<State, Action> = identified(reducer: CellView.reducer, \.cells, \.cell)
+        let mainReducer: Reducer<State, Action> = { state, action in
+            switch action {
+                case .cell(_):
+                    return []
+                case .delete(let indexSet):
+                    indexSet.forEach { state.items.remove(at: $0) }
+                    return []
+            }
+        }
+        return combine(detailReducer, mainReducer)
     }
 }
 
@@ -44,8 +55,13 @@ struct ListView: View {
     @ObservedObject var store: Store<State, Action>
 
     var body: some View {
-        List(store.value.items) {
-            Text("\($0.id) | \($0.value)")
+        List {
+            ForEach(store.value.items) {
+                Text("\($0.id) | \($0.value)")
+            }
+            .onDelete { (indexSet) in
+                self.store.send(.delete(indexSet))
+            }
         }
     }
 }
