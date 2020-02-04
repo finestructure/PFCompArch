@@ -121,17 +121,15 @@ public struct Indexed<Value> {
 public func indexed<State, Action, GlobalState, GlobalAction>(
     reducer: @escaping Reducer<State, Action>,
     _ stateKeyPath: WritableKeyPath<GlobalState, [State]>,
-    _ actionKeyPath: WritableKeyPath<GlobalAction, Indexed<Action>?>
+    _ actionKeyPath: CasePath<GlobalAction, Indexed<Action>>
 ) -> Reducer<GlobalState, GlobalAction> {
     return { globalValue, globalAction in
-        guard let localAction = globalAction[keyPath: actionKeyPath] else { return [] }
+        guard let localAction = actionKeyPath.extract(from: globalAction) else { return [] }
         let index = localAction.index
         let localEffects = reducer(&globalValue[keyPath: stateKeyPath][index], localAction.value)
         return localEffects.map { localEffect in
             localEffect.map { localAction in
-                var globalAction = globalAction
-                globalAction[keyPath: actionKeyPath] = Indexed(index: index, value: localAction)
-                return globalAction
+                actionKeyPath.embed(Indexed(index: index, value: localAction))
             }.eraseToEffect()
         }
     }
@@ -161,7 +159,7 @@ public func identified<State: Identifiable, Action, GlobalState, GlobalAction>(
         let localEffects = reducer(&globalValue[keyPath: stateKeyPath][index], localAction.action)
         return localEffects.map { localEffect in
             localEffect.map { localAction in
-                return actionKeyPath.embed(Identified(id: id, action: localAction))
+                actionKeyPath.embed(Identified(id: id, action: localAction))
             }.eraseToEffect()
         }
     }
