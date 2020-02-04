@@ -6,6 +6,7 @@
 //  Copyright © 2020 finestructure. All rights reserved.
 //
 
+import CasePaths
 import CompArch
 import SwiftUI
 
@@ -22,21 +23,10 @@ extension ListView {
     enum Action {
         case cell(Identified<CellView.State, CellView.Action>)
         case delete(IndexSet)
-
-        var cell: Identified<CellView.State, CellView.Action>? {
-            get {
-                guard case let .cell(value) = self else { return nil }
-                return value
-            }
-            set {
-                guard case .cell = self, let newValue = newValue else { return }
-                self = .cell(newValue)
-            }
-        }
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
-        let detailReducer: Reducer<State, Action> = identified(reducer: CellView.reducer, \.cells, \.cell)
+        let detailReducer: Reducer<State, Action> = identified(reducer: CellView.reducer, \.cells, /Action.cell)
         let mainReducer: Reducer<State, Action> = { state, action in
             switch action {
                 case .cell(_):

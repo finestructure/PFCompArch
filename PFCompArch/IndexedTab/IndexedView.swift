@@ -6,6 +6,7 @@
 //  Copyright © 2020 finestructure. All rights reserved.
 //
 
+import CasePaths
 import CompArch
 import SwiftUI
 
@@ -22,21 +23,10 @@ extension IndexedView {
 
     enum Action {
         case cell(Indexed<CellView.Action>)
-
-        var cell: Indexed<CellView.Action>? {
-            get {
-                guard case let .cell(value) = self else { return nil }
-                return value
-            }
-            set {
-                guard case .cell = self, let newValue = newValue else { return }
-                self = .cell(newValue)
-            }
-        }
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
-        indexed(reducer: CellView.reducer, \.cells, \.cell)
+        indexed(reducer: CellView.reducer, \.cells, /Action.cell)
     }
 }
 
