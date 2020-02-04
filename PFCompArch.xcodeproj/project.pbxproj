@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,8 @@
 		5A1EFD8C23E87AC0003BAA72 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD8B23E87AC0003BAA72 /* CellView.swift */; };
 		5A1EFD8E23E880BF003BAA72 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD8D23E880BF003BAA72 /* Item.swift */; };
 		5A1EFD9123E88236003BAA72 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD9023E88236003BAA72 /* ListView.swift */; };
+		5A4A375E23E9D86200795403 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5A4A375D23E9D86200795403 /* CasePaths */; };
+		5A4A376323E9DDDD00795403 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5A4A376223E9DDDD00795403 /* CasePaths */; };
 		5AF5F87423E400A50084E2D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87323E400A50084E2D1 /* AppDelegate.swift */; };
 		5AF5F87623E400A50084E2D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87523E400A50084E2D1 /* SceneDelegate.swift */; };
 		5AF5F87823E400A50084E2D1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87723E400A50084E2D1 /* ContentView.swift */; };
@@ -76,6 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AF5F89323E401080084E2D1 /* CompArch.framework in Frameworks */,
+				5A4A375E23E9D86200795403 /* CasePaths in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A4A376323E9DDDD00795403 /* CasePaths in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,12 +126,20 @@
 			path = ListTab;
 			sourceTree = "<group>";
 		};
+		5A4A376123E9DDDD00795403 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5AF5F86723E400A50084E2D1 = {
 			isa = PBXGroup;
 			children = (
 				5AF5F87223E400A50084E2D1 /* PFCompArch */,
 				5AF5F88D23E401080084E2D1 /* CompArch */,
 				5AF5F87123E400A50084E2D1 /* Products */,
+				5A4A376123E9DDDD00795403 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -205,6 +217,9 @@
 				5AF5F89223E401080084E2D1 /* PBXTargetDependency */,
 			);
 			name = PFCompArch;
+			packageProductDependencies = (
+				5A4A375D23E9D86200795403 /* CasePaths */,
+			);
 			productName = PFCompArch;
 			productReference = 5AF5F87023E400A50084E2D1 /* PFCompArch.app */;
 			productType = "com.apple.product-type.application";
@@ -223,6 +238,9 @@
 			dependencies = (
 			);
 			name = CompArch;
+			packageProductDependencies = (
+				5A4A376223E9DDDD00795403 /* CasePaths */,
+			);
 			productName = CompArch;
 			productReference = 5AF5F88C23E401080084E2D1 /* CompArch.framework */;
 			productType = "com.apple.product-type.framework";
@@ -255,6 +273,9 @@
 				Base,
 			);
 			mainGroup = 5AF5F86723E400A50084E2D1;
+			packageReferences = (
+				5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
+			);
 			productRefGroup = 5AF5F87123E400A50084E2D1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -577,6 +598,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-case-paths.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5A4A375D23E9D86200795403 /* CasePaths */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
+			productName = CasePaths;
+		};
+		5A4A376223E9DDDD00795403 /* CasePaths */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
+			productName = CasePaths;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5AF5F86823E400A50084E2D1 /* Project object */;
 }
