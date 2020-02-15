@@ -11,25 +11,65 @@ import CompArch
 import SwiftUI
 
 
+struct ListCell: View {
+    @ObservedObject var store: Store<State, Action>
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("\(store.value.id)")
+                Text("\(store.value.item.value)")
+            }
+            Spacer()
+            Button(action: { self.store.send(.deleteTapped) },
+                   label: {
+                    Image(systemName: "multiply.circle")
+                        .font(.title)
+                        .foregroundColor(Color.red)
+            })
+        }
+    }
+
+    struct State {
+        var id: UUID { item.id }
+        var item: Item
+    }
+
+    enum Action {
+        case deleteTapped
+    }
+
+    static var reducer: Reducer<State, Action> = { state, action in
+        switch action {
+            case .deleteTapped:
+                return []
+        }
+    }
+}
+
+
 extension ListView {
     struct State {
         var items: [Item]
-        var cells: [CellView.State] {
-            get { items.map(CellView.State.init) }
+        var cells: [ListCell.State] {
+            get { items.map(ListCell.State.init) }
             set { items = newValue.map { $0.item } }
         }
     }
 
     enum Action {
-        case cell(Identified<CellView.State, CellView.Action>)
+        case cell(Indexed<ListCell.Action>)
         case delete(IndexSet)
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
-        let detailReducer: Reducer<State, Action> = identified(reducer: CellView.reducer, \.cells, /Action.cell)
+        let detailReducer: Reducer<State, Action> = indexed(reducer: ListCell.reducer, \.cells, /Action.cell)
         let mainReducer: Reducer<State, Action> = { state, action in
             switch action {
-                case .cell(_):
+                case .cell(let indexedAction):
+                    if case .deleteTapped = indexedAction.value {
+                        state.items.remove(at: indexedAction.index)
+                    }
                     return []
                 case .delete(let indexSet):
                     indexSet.forEach { state.items.remove(at: $0) }
@@ -46,11 +86,10 @@ struct ListView: View {
 
     var body: some View {
         List {
-            ForEach(store.value.items) {
-                Text("\($0.id) | \($0.value)")
-            }
-            .onDelete { (indexSet) in
-                self.store.send(.delete(indexSet))
+            ForEach(store.value.items.indices) { idx in
+                ListCell(store: self.store.view(
+                    value: { $0.cells[idx] },
+                    action: { .cell(Indexed(index: idx, value: $0)) } ))
             }
         }
     }
