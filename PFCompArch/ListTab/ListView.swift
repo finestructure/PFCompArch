@@ -11,41 +11,6 @@ import CompArch
 import SwiftUI
 
 
-struct ListCell: View {
-    @ObservedObject var store: Store<State, Action>
-
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text("\(store.value.id)")
-                Text("\(store.value.item.value)")
-            }
-            Spacer()
-            Image(systemName: "multiply.circle")
-                .font(.title)
-                .foregroundColor(Color.red)
-                .onTapGesture { self.store.send(.deleteTapped) }
-        }
-    }
-
-    struct State: Identifiable {
-        var id: UUID { item.id }
-        var item: Item
-    }
-
-    enum Action {
-        case deleteTapped
-    }
-
-    static var reducer: Reducer<State, Action> = { state, action in
-        switch action {
-            case .deleteTapped:
-                return []
-        }
-    }
-}
-
-
 extension ListView {
     struct State {
         var items: [Item]
