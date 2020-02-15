@@ -21,7 +21,11 @@ struct ContentView: View {
                 Image(systemName: "increase.indent")
                 Text("Indexed")
             }
-            ListView(store: Sample.listViewStore).tabItem {
+            IdentifiedListView(store: Sample.listViewStore).tabItem {
+                Image(systemName: "list.dash")
+                Text("List")
+            }
+            IdentifiedListView(store: Sample.listViewStore).tabItem {
                 Image(systemName: "list.dash")
                 Text("List")
             }
