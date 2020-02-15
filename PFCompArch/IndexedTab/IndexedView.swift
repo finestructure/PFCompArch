@@ -42,7 +42,7 @@ struct IndexedView: View {
                 CellView(store:
                     self.store.view(
                         value: { $0.cells[idx] },
-                        action: { .cell(Indexed(index: idx, value: $0)) })
+                        action: { .cell(Indexed(index: idx, action: $0)) })
                 )
             }
         }
