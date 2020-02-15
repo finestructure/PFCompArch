@@ -11,7 +11,7 @@ import CompArch
 import SwiftUI
 
 
-extension IdentifiedListView {
+extension ListView {
     struct State {
         var items: [Item]
         var cells: [ListCell.State] {
@@ -45,7 +45,7 @@ extension IdentifiedListView {
 }
 
 
-struct IdentifiedListView: View {
+struct ListView: View {
     @ObservedObject var store: Store<State, Action>
 
     func cellView(for item: Item) -> AnyView {
@@ -73,14 +73,14 @@ struct IdentifiedListView: View {
 
 
 extension Sample {
-    static var listViewStore: Store<IdentifiedListView.State, IdentifiedListView.Action> {
-        .init(initialValue: .init(items: [1, 2, 3]), reducer: IdentifiedListView.reducer)
+    static var listViewStore: Store<ListView.State, ListView.Action> {
+        .init(initialValue: .init(items: [1, 2, 3]), reducer: ListView.reducer)
     }
 }
 
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        IdentifiedListView(store: Sample.listViewStore)
+        ListView(store: Sample.listViewStore)
     }
 }
