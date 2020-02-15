@@ -30,7 +30,7 @@ struct ListCell: View {
         }
     }
 
-    struct State {
+    struct State: Identifiable {
         var id: UUID { item.id }
         var item: Item
     }
@@ -58,17 +58,17 @@ extension ListView {
     }
 
     enum Action {
-        case cell(Indexed<ListCell.Action>)
+        case cell(Identified<ListCell.State, ListCell.Action>)
         case delete(IndexSet)
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
-        let detailReducer: Reducer<State, Action> = indexed(reducer: ListCell.reducer, \.cells, /Action.cell)
+        let detailReducer: Reducer<State, Action> = identified(reducer: ListCell.reducer, \.cells, /Action.cell)
         let mainReducer: Reducer<State, Action> = { state, action in
             switch action {
-                case .cell(let indexedAction):
-                    if case .deleteTapped = indexedAction.value {
-                        state.items.remove(at: indexedAction.index)
+                case .cell(let identifiedAction):
+                    if case .deleteTapped = identifiedAction.action {
+                        state.items.removeAll(where: { $0.id == identifiedAction.id })
                     }
                     return []
                 case .delete(let indexSet):
@@ -86,10 +86,11 @@ struct ListView: View {
 
     var body: some View {
         List {
-            ForEach(store.value.items.indices) { idx in
+            ForEach(store.value.items) { cell in
                 ListCell(store: self.store.view(
-                    value: { $0.cells[idx] },
-                    action: { .cell(Indexed(index: idx, value: $0)) } ))
+                    // TODO: avoid hard unwrap here (add accessor mechanism)
+                    value: { $0.cells.first(where: { $0.id == cell.id })! },
+                    action: { .cell(Identified(id: cell.id, action: $0)) }))
             }
         }
     }
