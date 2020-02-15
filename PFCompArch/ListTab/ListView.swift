@@ -67,6 +67,7 @@ extension ListView {
         let mainReducer: Reducer<State, Action> = { state, action in
             switch action {
                 case .cell(let identifiedAction):
+                    // FIXME: use tuple to destructure https://github.com/pointfreeco/episode-code-samples/issues/33#issuecomment-549882781
                     if case .deleteTapped = identifiedAction.action {
                         state.items.removeAll(where: { $0.id == identifiedAction.id })
                     }
@@ -84,13 +85,24 @@ extension ListView {
 struct ListView: View {
     @ObservedObject var store: Store<State, Action>
 
+    func cellView(for item: Item) -> AnyView {
+        guard let cell = store.value.items.first(where: { $0.id == item.id }) else {
+            return AnyView(EmptyView())
+        }
+        return AnyView(
+            ListCell(store: self.store.view(
+                value: { _ in .init(item: cell) },
+                action: { .cell(Identified(id: cell.id, action: $0)) }))
+        )
+    }
+
     var body: some View {
         List {
             ForEach(store.value.items) { cell in
-                ListCell(store: self.store.view(
-                    // TODO: avoid hard unwrap here (add accessor mechanism)
-                    value: { $0.cells.first(where: { $0.id == cell.id })! },
-                    action: { .cell(Identified(id: cell.id, action: $0)) }))
+                self.cellView(for: cell)
+            }
+            .onDelete { (indexSet) in
+                self.store.send(.delete(indexSet))
             }
         }
     }
