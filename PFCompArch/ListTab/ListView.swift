@@ -21,12 +21,10 @@ struct ListCell: View {
                 Text("\(store.value.item.value)")
             }
             Spacer()
-            Button(action: { self.store.send(.deleteTapped) },
-                   label: {
-                    Image(systemName: "multiply.circle")
-                        .font(.title)
-                        .foregroundColor(Color.red)
-            })
+            Image(systemName: "multiply.circle")
+                .font(.title)
+                .foregroundColor(Color.red)
+                .onTapGesture { self.store.send(.deleteTapped) }
         }
     }
 
