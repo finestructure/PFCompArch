@@ -51,6 +51,7 @@ extension Sample {
     }
 }
 
+
 struct ListCell_Previews: PreviewProvider {
     static var previews: some View {
         ListCell(store: Sample.listCellStore)
