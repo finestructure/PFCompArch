@@ -11,6 +11,9 @@ import CompArch
 import SwiftUI
 
 
+typealias IdentifiedCell = Identified<CellView.State, CellView.Action>
+
+
 extension IdentifiedView {
     struct State {
         var items: [Item]
@@ -22,7 +25,7 @@ extension IdentifiedView {
     }
 
     enum Action {
-        case cell(Identified<CellView.State, CellView.Action>)
+        case cell(IdentifiedCell)
     }
 
     static fileprivate var reducer: Reducer<State, Action> {
@@ -40,7 +43,7 @@ struct IdentifiedView: View {
             Text("Total: \(store.value.total())")
             ForEach(store.value.cells) { cell in
                 CellView(store: self.store.view(value: { $0.cells.first(where: { $0.id == cell.id })! },
-                                                action: { .cell(Identified(id: cell.id, action: $0)) }
+                                                action: { .cell(IdentifiedCell(id: cell.id, action: $0)) }
                     )
                 )}
         }

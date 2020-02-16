@@ -11,6 +11,9 @@ import CompArch
 import SwiftUI
 
 
+typealias IdentifiedListCell = Identified<ListCell.State, ListCell.Action>
+
+
 extension ListView {
     struct State {
         var items: [Item]
@@ -21,7 +24,7 @@ extension ListView {
     }
 
     enum Action {
-        case cell(Identified<ListCell.State, ListCell.Action>)
+        case cell(IdentifiedListCell)
         case delete(IndexSet)
     }
 
@@ -29,11 +32,8 @@ extension ListView {
         let detailReducer: Reducer<State, Action> = identified(reducer: ListCell.reducer, \.cells, /Action.cell)
         let mainReducer: Reducer<State, Action> = { state, action in
             switch action {
-                case .cell(let identifiedAction):
-                    // FIXME: use tuple to destructure https://github.com/pointfreeco/episode-code-samples/issues/33#issuecomment-549882781
-                    if case .deleteTapped = identifiedAction.action {
-                        state.items.removeAll(where: { $0.id == identifiedAction.id })
-                    }
+                case .cell((let id, .deleteTapped)):
+                    state.items.removeAll(where: { $0.id == id })
                     return []
                 case .delete(let indexSet):
                     indexSet.forEach { state.items.remove(at: $0) }
@@ -55,7 +55,7 @@ struct ListView: View {
         return AnyView(
             ListCell(store: self.store.view(
                 value: { _ in .init(item: cell) },
-                action: { .cell(Identified(id: cell.id, action: $0)) }))
+                action: { .cell(IdentifiedListCell(id: cell.id, action: $0)) }))
         )
     }
 
