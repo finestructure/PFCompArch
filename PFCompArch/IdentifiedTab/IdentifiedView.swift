@@ -28,7 +28,7 @@ extension IdentifiedView {
         case cell(IdentifiedCell)
     }
 
-    static fileprivate var reducer: Reducer<State, Action> {
+    static var reducer: Reducer<State, Action> {
         identified(reducer: CellView.reducer, \.cells, /Action.cell)
     }
 }
@@ -51,15 +51,16 @@ struct IdentifiedView: View {
 }
 
 
-extension Sample {
-    static var identifiedViewStore: Store<IdentifiedView.State, IdentifiedView.Action> {
-        .init(initialValue: .init(items: [1, 2, 3]), reducer: IdentifiedView.reducer)
+extension IdentifiedView {
+    static func store(items: [Item]) -> Store<State, Action> {
+        let initial = IdentifiedView.State(items: items)
+        return Store(initialValue: initial, reducer: reducer)
     }
 }
 
 
 struct IdentifiedView_Previews: PreviewProvider {
     static var previews: some View {
-        IdentifiedView(store: Sample.identifiedViewStore)
+        IdentifiedView(store: IdentifiedView.store(items: [1, 2, 3]))
     }
 }
