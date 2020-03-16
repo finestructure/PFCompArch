@@ -28,7 +28,7 @@ extension ListView {
         case delete(IndexSet)
     }
 
-    static fileprivate var reducer: Reducer<State, Action> {
+    static var reducer: Reducer<State, Action> {
         let detailReducer: Reducer<State, Action> = identified(reducer: ListCell.reducer, \.cells, /Action.cell)
         let mainReducer: Reducer<State, Action> = { state, action in
             switch action {
@@ -72,15 +72,16 @@ struct ListView: View {
 }
 
 
-extension Sample {
-    static var listViewStore: Store<ListView.State, ListView.Action> {
-        .init(initialValue: .init(items: [1, 2, 3]), reducer: ListView.reducer)
+extension ListView {
+    static func store(items: [Item]) -> Store<State, Action> {
+        let initial = ListView.State(items: items)
+        return Store(initialValue: initial, reducer: reducer)
     }
 }
 
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView(store: Sample.listViewStore)
+        ListView(store: ListView.store(items: [1, 2, 3]))
     }
 }

@@ -25,7 +25,7 @@ extension IndexedView {
         case cell(Indexed<CellView.Action>)
     }
 
-    static fileprivate var reducer: Reducer<State, Action> {
+    static var reducer: Reducer<State, Action> {
         indexed(reducer: CellView.reducer, \.cells, /Action.cell)
     }
 }
@@ -50,15 +50,16 @@ struct IndexedView: View {
 }
 
 
-extension Sample {
-    static var indexedViewStore: Store<IndexedView.State, IndexedView.Action> {
-        .init(initialValue: .init(items: [2, 3, 4]), reducer: IndexedView.reducer)
+extension IndexedView {
+    static func store(items: [Item]) -> Store<State, Action> {
+        let initial = IndexedView.State(items: items)
+        return Store(initialValue: initial, reducer: reducer)
     }
 }
 
 
 struct IndexedView_Previews: PreviewProvider {
     static var previews: some View {
-        IndexedView(store: Sample.indexedViewStore)
+        IndexedView(store: IndexedView.store(items: [2, 3, 4]))
     }
 }
