@@ -45,15 +45,16 @@ struct ListCell: View {
 }
 
 
-extension Sample {
-    static var listCellStore: Store<ListCell.State, ListCell.Action> {
-        .init(initialValue: .init(item: 42), reducer: ListCell.reducer)
+extension ListCell {
+    static func store(item: Item) -> Store<State, Action> {
+        let initial = ListCell.State(item: item)
+        return Store(initialValue: initial, reducer: reducer)
     }
 }
 
 
 struct ListCell_Previews: PreviewProvider {
     static var previews: some View {
-        ListCell(store: Sample.listCellStore)
+        ListCell(store: ListCell.store(item: 42))
     }
 }
