@@ -15,11 +15,13 @@ extension ContentView {
     struct State {
         var identifiedView: IdentifiedView.State
         var indexedView: IndexedView.State
+        var listView: ListView.State
     }
 
     enum Action {
         case identifiedView(IdentifiedView.Action)
         case indexedView(IndexedView.Action)
+        case listView(ListView.Action)
     }
 
     static var reducer: Reducer<State, Action> {
@@ -33,7 +35,12 @@ extension ContentView {
             value: \State.indexedView,
             action: /Action.indexedView)
 
-        return combine(identifiedViewReducer, indexedViewReducer)
+        let listViewReducer: Reducer<State, Action> = pullback(
+            ListView.reducer,
+            value: \State.listView,
+            action: /Action.listView)
+
+        return combine(identifiedViewReducer, indexedViewReducer, listViewReducer)
     }
 }
 
@@ -55,7 +62,9 @@ struct ContentView: View {
                 Image(systemName: "increase.indent")
                 Text("Indexed")
             }
-            ListView(store: Sample.listViewStore).tabItem {
+            ListView(store: self.store.view(value: { $0.listView },
+                                            action: { .listView($0) })
+            ).tabItem {
                 Image(systemName: "list.dash")
                 Text("List")
             }
@@ -67,13 +76,11 @@ struct ContentView: View {
 extension ContentView {
     static func store(items: [Item]) -> Store<State, Action> {
         let initial = ContentView.State(identifiedView: .init(items: items),
-                                        indexedView: .init(items: items))
+                                        indexedView: .init(items: items),
+                                        listView: .init(items: items))
         return Store(initialValue: initial, reducer: reducer)
     }
 }
-
-
-struct Sample {}
 
 
 struct ContentView_Previews: PreviewProvider {
