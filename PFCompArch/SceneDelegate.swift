@@ -6,8 +6,15 @@
 //  Copyright © 2020 finestructure. All rights reserved.
 //
 
+import HistoryView
 import UIKit
 import SwiftUI
+
+
+var appStore = AppView.store()
+var historyStore = appStore.view(value: { $0.historyView },
+                                 action: { .historyView($0) })
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -15,12 +22,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        Transceiver.shared.receive(Message.self) { msg in
+            if msg.kind == .reset {
+                historyStore.send(.newState(msg.state))
+            }
+        }
+        Transceiver.shared.resume()
 
-        // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView(store: ContentView.store(items: [1, 2, 3]))
+        let contentView = AppView(store: appStore)
 
 
         // Use a UIHostingController as window root view controller.
