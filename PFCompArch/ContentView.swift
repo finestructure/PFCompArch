@@ -14,10 +14,12 @@ import SwiftUI
 extension ContentView {
     struct State {
         var identifiedView: IdentifiedView.State
+        var indexedView: IndexedView.State
     }
 
     enum Action {
         case identifiedView(IdentifiedView.Action)
+        case indexedView(IndexedView.Action)
     }
 
     static var reducer: Reducer<State, Action> {
@@ -26,7 +28,12 @@ extension ContentView {
             value: \State.identifiedView,
             action: /Action.identifiedView)
 
-        return identifiedViewReducer
+        let indexedViewReducer: Reducer<State, Action> = pullback(
+            IndexedView.reducer,
+            value: \State.indexedView,
+            action: /Action.indexedView)
+
+        return combine(identifiedViewReducer, indexedViewReducer)
     }
 }
 
@@ -42,7 +49,9 @@ struct ContentView: View {
                 Image(systemName: "faceid")
                 Text("Identified")
             }
-            IndexedView(store: Sample.indexedViewStore).tabItem {
+            IndexedView(store: self.store.view(value: { $0.indexedView },
+                                               action: { .indexedView($0) })
+            ).tabItem {
                 Image(systemName: "increase.indent")
                 Text("Indexed")
             }
@@ -57,7 +66,8 @@ struct ContentView: View {
 
 extension ContentView {
     static func store(items: [Item]) -> Store<State, Action> {
-        let initial = ContentView.State(identifiedView: .init(items: items))
+        let initial = ContentView.State(identifiedView: .init(items: items),
+                                        indexedView: .init(items: items))
         return Store(initialValue: initial, reducer: reducer)
     }
 }
