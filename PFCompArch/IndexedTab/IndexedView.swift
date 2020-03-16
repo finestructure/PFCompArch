@@ -12,7 +12,7 @@ import SwiftUI
 
 
 extension IndexedView {
-    struct State {
+    struct State: Codable {
         var items: [Item]
         func total() -> Int { items.reduce(0, { $0 + $1.value }) }
         var cells: [CellView.State] {

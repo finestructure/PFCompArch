@@ -15,7 +15,7 @@ typealias IdentifiedCell = Identified<CellView.State, CellView.Action>
 
 
 extension IdentifiedView {
-    struct State {
+    struct State: Codable {
         var items: [Item]
         func total() -> Int { items.reduce(0, { $0 + $1.value }) }
         var cells: [CellView.State] {

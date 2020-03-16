@@ -12,7 +12,7 @@ import SwiftUI
 
 
 extension ContentView {
-    struct State {
+    struct State: Codable {
         var identifiedView: IdentifiedView.State
         var indexedView: IndexedView.State
         var listView: ListView.State

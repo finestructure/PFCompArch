@@ -15,7 +15,7 @@ typealias IdentifiedListCell = Identified<ListCell.State, ListCell.Action>
 
 
 extension ListView {
-    struct State {
+    struct State: Codable {
         var items: [Item]
         var cells: [ListCell.State] {
             get { items.map(ListCell.State.init) }

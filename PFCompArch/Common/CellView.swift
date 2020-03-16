@@ -11,7 +11,7 @@ import SwiftUI
 
 
 extension CellView {
-    struct State: Identifiable {
+    struct State: Identifiable, Codable {
         var id: UUID { item.id }
         var item: Item
     }
