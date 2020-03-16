@@ -15,6 +15,7 @@
 		5A1EFD9123E88236003BAA72 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD9023E88236003BAA72 /* ListView.swift */; };
 		5A24093523F8466400C4D850 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24093423F8466400C4D850 /* ListCell.swift */; };
 		5A4A375E23E9D86200795403 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5A4A375D23E9D86200795403 /* CasePaths */; };
+		5A64C369241FD0E300B167C3 /* HistoryView in Frameworks */ = {isa = PBXBuildFile; productRef = 5A64C368241FD0E300B167C3 /* HistoryView */; };
 		5AF5F87423E400A50084E2D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87323E400A50084E2D1 /* AppDelegate.swift */; };
 		5AF5F87623E400A50084E2D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87523E400A50084E2D1 /* SceneDelegate.swift */; };
 		5AF5F87823E400A50084E2D1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87723E400A50084E2D1 /* ContentView.swift */; };
@@ -58,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A64C369241FD0E300B167C3 /* HistoryView in Frameworks */,
 				5A4A375E23E9D86200795403 /* CasePaths in Frameworks */,
 				5A0AA2C923F6C2C7003627AE /* CompArch in Frameworks */,
 			);
@@ -170,6 +172,7 @@
 			packageProductDependencies = (
 				5A4A375D23E9D86200795403 /* CasePaths */,
 				5A0AA2C823F6C2C7003627AE /* CompArch */,
+				5A64C368241FD0E300B167C3 /* HistoryView */,
 			);
 			productName = PFCompArch;
 			productReference = 5AF5F87023E400A50084E2D1 /* PFCompArch.app */;
@@ -202,6 +205,7 @@
 			packageReferences = (
 				5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 				5A0AA2C723F6C2C7003627AE /* XCRemoteSwiftPackageReference "CompArch" */,
+				5A64C367241FD0E300B167C3 /* XCRemoteSwiftPackageReference "HistoryView" */,
 			);
 			productRefGroup = 5AF5F87123E400A50084E2D1 /* Products */;
 			projectDirPath = "";
@@ -452,6 +456,14 @@
 				minimumVersion = 0.1.0;
 			};
 		};
+		5A64C367241FD0E300B167C3 /* XCRemoteSwiftPackageReference "HistoryView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/finestructure/HistoryView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -464,6 +476,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */;
 			productName = CasePaths;
+		};
+		5A64C368241FD0E300B167C3 /* HistoryView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A64C367241FD0E300B167C3 /* XCRemoteSwiftPackageReference "HistoryView" */;
+			productName = HistoryView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
