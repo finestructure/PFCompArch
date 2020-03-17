@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         Transceiver.shared.receive(Message.self) { msg in
-            if msg.kind == .reset {
+            if msg.command == .reset {
                 appStore.send(.updateState(msg.state))
             }
         }
