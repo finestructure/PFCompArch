@@ -8,7 +8,6 @@
 
 import CasePaths
 import CompArch
-import HistoryView
 import SwiftUI
 
 
@@ -29,21 +28,20 @@ struct AppView: View {
 extension AppView {
     struct State {
         var contentView: ContentView.State
-        var historyView: HistoryView.State
     }
 
     enum Action {
         case contentView(ContentView.Action)
-        case historyView(HistoryView.Action)
+        case updateState(Data?)
     }
 
     static var reducer: Reducer<State, Action> {
         let mainReducer: Reducer<State, Action> = { state, action in
             switch action {
-                case .historyView(.newState(let data)):
-                    state.contentView = data.flatMap(ContentView.State.init(from:)) ?? .init()
+                case .contentView:
                     return []
-                case .contentView(_), .historyView(_):
+                case .updateState(let data):
+                    state.contentView = data.flatMap(ContentView.State.init(from:)) ?? .init()
                     return []
             }
         }
@@ -55,17 +53,12 @@ extension AppView {
             value: \State.contentView,
             action: /Action.contentView)
 
-        let historyViewReducer = pullback(
-            HistoryView.reducer,
-            value: \State.historyView,
-            action: /Action.historyView)
-
-        return combine(mainReducer, contentViewReducer, historyViewReducer)
+        return combine(mainReducer, contentViewReducer)
     }
 
     static func store() -> Store<State, Action> {
-        Store(initialValue: .init( contentView: .init(), historyView: .init()),
-              reducer: reducer)
+        let initial = State(contentView: .init())
+        return Store(initialValue: initial, reducer: reducer)
     }
 }
 

@@ -6,14 +6,11 @@
 //  Copyright © 2020 finestructure. All rights reserved.
 //
 
-import HistoryView
 import UIKit
 import SwiftUI
 
 
 var appStore = AppView.store()
-var historyStore = appStore.view(value: { $0.historyView },
-                                 action: { .historyView($0) })
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -24,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         Transceiver.shared.receive(Message.self) { msg in
             if msg.kind == .reset {
-                historyStore.send(.newState(msg.state))
+                appStore.send(.updateState(msg.state))
             }
         }
         Transceiver.shared.resume()
