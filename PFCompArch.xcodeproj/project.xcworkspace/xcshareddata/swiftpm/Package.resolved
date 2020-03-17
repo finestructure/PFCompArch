@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "HistoryTransceiver",
+        "repositoryURL": "https://github.com/finestructure/HistoryTransceiver",
+        "state": {
+          "branch": null,
+          "revision": "7868dd6f076792f983c01d66cbff4636a1e3eb65",
+          "version": "0.0.1"
+        }
+      },
+      {
         "package": "MultipeerKit",
         "repositoryURL": "https://github.com/insidegui/MultipeerKit",
         "state": {

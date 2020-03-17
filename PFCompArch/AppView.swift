@@ -8,6 +8,7 @@
 
 import CasePaths
 import CompArch
+import HistoryTransceiver
 import SwiftUI
 
 

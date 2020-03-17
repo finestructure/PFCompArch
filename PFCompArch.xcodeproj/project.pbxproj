@@ -14,8 +14,7 @@
 		5A1EFD8E23E880BF003BAA72 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD8D23E880BF003BAA72 /* Item.swift */; };
 		5A1EFD9123E88236003BAA72 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD9023E88236003BAA72 /* ListView.swift */; };
 		5A24093523F8466400C4D850 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24093423F8466400C4D850 /* ListCell.swift */; };
-		5A4871092420F6B300C05EBE /* HistoryTransceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4871082420F6B300C05EBE /* HistoryTransceiver.swift */; };
-		5A48710C2420F71900C05EBE /* MultipeerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5A48710B2420F71900C05EBE /* MultipeerKit */; };
+		5A48710F2420FCBD00C05EBE /* HistoryTransceiver in Frameworks */ = {isa = PBXBuildFile; productRef = 5A48710E2420FCBD00C05EBE /* HistoryTransceiver */; };
 		5A4A375E23E9D86200795403 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5A4A375D23E9D86200795403 /* CasePaths */; };
 		5A64C370241FE4B400B167C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A64C36F241FE4B400B167C3 /* ContentView.swift */; };
 		5A64C371241FE4C000B167C3 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A64C36D241FDB0500B167C3 /* AppView.swift */; };
@@ -46,7 +45,6 @@
 		5A1EFD8D23E880BF003BAA72 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		5A1EFD9023E88236003BAA72 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		5A24093423F8466400C4D850 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		5A4871082420F6B300C05EBE /* HistoryTransceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTransceiver.swift; sourceTree = "<group>"; };
 		5A64C36D241FDB0500B167C3 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		5A64C36F241FE4B400B167C3 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5AF5F87023E400A50084E2D1 /* PFCompArch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFCompArch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,9 +61,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A48710F2420FCBD00C05EBE /* HistoryTransceiver in Frameworks */,
 				5A4A375E23E9D86200795403 /* CasePaths in Frameworks */,
 				5A0AA2C923F6C2C7003627AE /* CompArch in Frameworks */,
-				5A48710C2420F71900C05EBE /* MultipeerKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,7 +139,6 @@
 				5A64C36D241FDB0500B167C3 /* AppView.swift */,
 				5A64C36F241FE4B400B167C3 /* ContentView.swift */,
 				5AF5F87523E400A50084E2D1 /* SceneDelegate.swift */,
-				5A4871082420F6B300C05EBE /* HistoryTransceiver.swift */,
 				5AF5F87923E400A80084E2D1 /* Assets.xcassets */,
 				5AF5F87E23E400A80084E2D1 /* LaunchScreen.storyboard */,
 				5AF5F88123E400A80084E2D1 /* Info.plist */,
@@ -178,7 +175,7 @@
 			packageProductDependencies = (
 				5A4A375D23E9D86200795403 /* CasePaths */,
 				5A0AA2C823F6C2C7003627AE /* CompArch */,
-				5A48710B2420F71900C05EBE /* MultipeerKit */,
+				5A48710E2420FCBD00C05EBE /* HistoryTransceiver */,
 			);
 			productName = PFCompArch;
 			productReference = 5AF5F87023E400A50084E2D1 /* PFCompArch.app */;
@@ -211,7 +208,7 @@
 			packageReferences = (
 				5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 				5A0AA2C723F6C2C7003627AE /* XCRemoteSwiftPackageReference "CompArch" */,
-				5A48710A2420F71900C05EBE /* XCRemoteSwiftPackageReference "MultipeerKit" */,
+				5A48710D2420FCBD00C05EBE /* XCRemoteSwiftPackageReference "HistoryTransceiver" */,
 			);
 			productRefGroup = 5AF5F87123E400A50084E2D1 /* Products */;
 			projectDirPath = "";
@@ -249,7 +246,6 @@
 				5A24093523F8466400C4D850 /* ListCell.swift in Sources */,
 				5A1EFD8923E87918003BAA72 /* IndexedView.swift in Sources */,
 				5A64C371241FE4C000B167C3 /* AppView.swift in Sources */,
-				5A4871092420F6B300C05EBE /* HistoryTransceiver.swift in Sources */,
 				5A1EFD8623E87874003BAA72 /* IdentifiedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,12 +452,12 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		5A48710A2420F71900C05EBE /* XCRemoteSwiftPackageReference "MultipeerKit" */ = {
+		5A48710D2420FCBD00C05EBE /* XCRemoteSwiftPackageReference "HistoryTransceiver" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/insidegui/MultipeerKit";
+			repositoryURL = "https://github.com/finestructure/HistoryTransceiver";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.2;
+				minimumVersion = 0.0.1;
 			};
 		};
 		5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
@@ -480,10 +476,10 @@
 			package = 5A0AA2C723F6C2C7003627AE /* XCRemoteSwiftPackageReference "CompArch" */;
 			productName = CompArch;
 		};
-		5A48710B2420F71900C05EBE /* MultipeerKit */ = {
+		5A48710E2420FCBD00C05EBE /* HistoryTransceiver */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5A48710A2420F71900C05EBE /* XCRemoteSwiftPackageReference "MultipeerKit" */;
-			productName = MultipeerKit;
+			package = 5A48710D2420FCBD00C05EBE /* XCRemoteSwiftPackageReference "HistoryTransceiver" */;
+			productName = HistoryTransceiver;
 		};
 		5A4A375D23E9D86200795403 /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;
