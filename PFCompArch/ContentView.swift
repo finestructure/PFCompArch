@@ -8,6 +8,7 @@
 
 import CasePaths
 import CompArch
+import HistoryTransceiver
 import SwiftUI
 
 
@@ -16,12 +17,24 @@ extension ContentView {
         var identifiedView: IdentifiedView.State
         var indexedView: IndexedView.State
         var listView: ListView.State
+
+        init(items: [Item]) {
+            self.identifiedView = .init(items: items)
+            self.indexedView = .init(items: items)
+            self.listView = .init(items: items)
+        }
+
+        init?(from data: Data) {
+            guard let state = try? JSONDecoder().decode(Self.self, from: data) else { return nil }
+            self = state
+        }
     }
 
     enum Action {
         case identifiedView(IdentifiedView.Action)
         case indexedView(IndexedView.Action)
         case listView(ListView.Action)
+        case updateState(Data?)
     }
 
     static var reducer: Reducer<State, Action> {
@@ -40,7 +53,22 @@ extension ContentView {
             value: \State.listView,
             action: /Action.listView)
 
-        return combine(identifiedViewReducer, indexedViewReducer, listViewReducer)
+        let historyReducer: Reducer<State, Action> = { state, action in
+            switch action {
+                case .updateState(let data):
+                    // receiving a nil value signals resetting to initial state
+                    state = data.flatMap(ContentView.State.init(from:)) ?? initialState
+                    return []
+                default:
+                    return []
+            }
+        }
+
+        // FIXME: somehow, despite constraining broadcast to only work on the child reducers here
+        // it still transmits the .updateState() action, which we don't really want fed back
+        let combinedReducer = broadcast(combine(identifiedViewReducer, indexedViewReducer, listViewReducer))
+
+        return combine(combinedReducer, historyReducer)
     }
 }
 
@@ -75,9 +103,7 @@ struct ContentView: View {
 
 extension ContentView {
     static func store(items: [Item]) -> Store<State, Action> {
-        let initial = ContentView.State(identifiedView: .init(items: items),
-                                        indexedView: .init(items: items),
-                                        listView: .init(items: items))
+        let initial = ContentView.State(items: items)
         return Store(initialValue: initial, reducer: reducer)
     }
 }

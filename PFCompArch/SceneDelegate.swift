@@ -6,8 +6,15 @@
 //  Copyright © 2020 finestructure. All rights reserved.
 //
 
+import CompArch
+import HistoryTransceiver
 import UIKit
 import SwiftUI
+
+
+var initialState = ContentView.State(items: [1, 2, 3])
+var appStore = Store(initialValue: initialState, reducer: ContentView.reducer)
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -18,9 +25,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        Transceiver.shared.receive(Message.self) { msg in
+            if msg.command == .reset {
+                appStore.send(.updateState(msg.state))
+            }
+        }
+        Transceiver.shared.resume()
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView(store: ContentView.store(items: [1, 2, 3]))
+        let contentView = ContentView(store: appStore)
 
 
         // Use a UIHostingController as window root view controller.
