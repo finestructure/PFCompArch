@@ -42,8 +42,10 @@ struct IdentifiedView: View {
             Text("Identified").font(.title)
             Text("Total: \(store.value.total())")
             ForEach(store.value.cells) { cell in
-                CellView(store: self.store.view(\.cells, id: cell.id, action: /Action.cell))
-            }
+                CellView(store: self.store.view(value: { $0.cells.first(where: { $0.id == cell.id })! },
+                                                action: { .cell(IdentifiedCell(id: cell.id, action: $0)) }
+                    )
+                )}
         }
     }
 }

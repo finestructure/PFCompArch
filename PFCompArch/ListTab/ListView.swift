@@ -53,7 +53,9 @@ struct ListView: View {
             return AnyView(EmptyView())
         }
         return AnyView(
-            ListCell(store: self.store.view(\.cells, id: cell.id, action: /Action.cell))
+            ListCell(store: self.store.view(
+                value: { _ in .init(item: cell) },
+                action: { .cell(IdentifiedListCell(id: cell.id, action: $0)) }))
         )
     }
 
