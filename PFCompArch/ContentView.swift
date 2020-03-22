@@ -100,16 +100,11 @@ extension ContentView.State: StateInitializable {
         self.indexedView = .init(items: items)
         self.listView = .init(items: items)
     }
-
-    init?(from data: Data) {
-        guard let state = try? JSONDecoder().decode(Self.self, from: data) else { return nil }
-        self = state
-    }
 }
 
 
 extension ContentView: StateSurfable {
-    static func body(store: Store<State, Action>) -> ContentView {
+    static func body(store: Store<State, Action>) -> Self {
         ContentView(store: store)
     }
 }
