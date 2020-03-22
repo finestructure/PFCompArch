@@ -14,6 +14,7 @@
 		5A1EFD8E23E880BF003BAA72 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD8D23E880BF003BAA72 /* Item.swift */; };
 		5A1EFD9123E88236003BAA72 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1EFD9023E88236003BAA72 /* ListView.swift */; };
 		5A24093523F8466400C4D850 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24093423F8466400C4D850 /* ListCell.swift */; };
+		5A410D7F2427B19D008C4A3C /* HistoryTransceiver in Frameworks */ = {isa = PBXBuildFile; productRef = 5A410D7E2427B19D008C4A3C /* HistoryTransceiver */; };
 		5A4A375E23E9D86200795403 /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 5A4A375D23E9D86200795403 /* CasePaths */; };
 		5AF5F87423E400A50084E2D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87323E400A50084E2D1 /* AppDelegate.swift */; };
 		5AF5F87623E400A50084E2D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F87523E400A50084E2D1 /* SceneDelegate.swift */; };
@@ -58,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A410D7F2427B19D008C4A3C /* HistoryTransceiver in Frameworks */,
 				5A4A375E23E9D86200795403 /* CasePaths in Frameworks */,
 				5A0AA2C923F6C2C7003627AE /* CompArch in Frameworks */,
 			);
@@ -170,6 +172,7 @@
 			packageProductDependencies = (
 				5A4A375D23E9D86200795403 /* CasePaths */,
 				5A0AA2C823F6C2C7003627AE /* CompArch */,
+				5A410D7E2427B19D008C4A3C /* HistoryTransceiver */,
 			);
 			productName = PFCompArch;
 			productReference = 5AF5F87023E400A50084E2D1 /* PFCompArch.app */;
@@ -202,6 +205,7 @@
 			packageReferences = (
 				5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */,
 				5A0AA2C723F6C2C7003627AE /* XCRemoteSwiftPackageReference "CompArch" */,
+				5A410D7D2427B19D008C4A3C /* XCRemoteSwiftPackageReference "HistoryTransceiver" */,
 			);
 			productRefGroup = 5AF5F87123E400A50084E2D1 /* Products */;
 			projectDirPath = "";
@@ -444,6 +448,14 @@
 				minimumVersion = 0.1.0;
 			};
 		};
+		5A410D7D2427B19D008C4A3C /* XCRemoteSwiftPackageReference "HistoryTransceiver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/finestructure/HistoryTransceiver";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
 		5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-case-paths.git";
@@ -459,6 +471,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5A0AA2C723F6C2C7003627AE /* XCRemoteSwiftPackageReference "CompArch" */;
 			productName = CompArch;
+		};
+		5A410D7E2427B19D008C4A3C /* HistoryTransceiver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5A410D7D2427B19D008C4A3C /* XCRemoteSwiftPackageReference "HistoryTransceiver" */;
+			productName = HistoryTransceiver;
 		};
 		5A4A375D23E9D86200795403 /* CasePaths */ = {
 			isa = XCSwiftPackageProductDependency;

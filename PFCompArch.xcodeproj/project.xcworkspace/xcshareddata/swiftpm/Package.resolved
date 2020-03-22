@@ -11,6 +11,24 @@
         }
       },
       {
+        "package": "HistoryTransceiver",
+        "repositoryURL": "https://github.com/finestructure/HistoryTransceiver",
+        "state": {
+          "branch": null,
+          "revision": "5621f4dc442a5047b7ee8f0ee78538cfe9e0755e",
+          "version": "0.0.4"
+        }
+      },
+      {
+        "package": "MultipeerKit",
+        "repositoryURL": "https://github.com/insidegui/MultipeerKit",
+        "state": {
+          "branch": null,
+          "revision": "3f430bc28e1426ba42cdaa8b19fb4d89ce6d1c3b",
+          "version": "0.1.2"
+        }
+      },
+      {
         "package": "CasePaths",
         "repositoryURL": "https://github.com/pointfreeco/swift-case-paths.git",
         "state": {
