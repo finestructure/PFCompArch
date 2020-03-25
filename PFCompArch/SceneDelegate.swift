@@ -11,9 +11,6 @@ import UIKit
 import SwiftUI
 
 
-var appStore = HistoryTransceiverView<ContentView>.store()
-
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -24,16 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
-        Transceiver.shared.receive(Message.self) { msg in
-            if msg.command == .reset {
-                appStore.send(.updateState(msg.state))
-            }
-        }
-        Transceiver.shared.resume()
-
         // Create the SwiftUI view that provides the window contents.
-        let contentView = HistoryTransceiverView<ContentView>(store: appStore)
-
+        let contentView = HistoryTransceiverView<ContentView>()
+        contentView.resume()
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

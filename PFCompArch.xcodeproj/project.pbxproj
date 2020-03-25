@@ -453,7 +453,7 @@
 			repositoryURL = "https://github.com/finestructure/HistoryTransceiver";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.4;
+				minimumVersion = 0.0.8;
 			};
 		};
 		5A4A375C23E9D86200795403 /* XCRemoteSwiftPackageReference "swift-case-paths" */ = {
