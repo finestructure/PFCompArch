@@ -8,6 +8,7 @@
 
 import CasePaths
 import CompArch
+import HistoryTransceiver
 import SwiftUI
 
 
@@ -89,3 +90,21 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+
+// MARK:- State surfing
+
+extension ContentView.State: StateInitializable {
+    init() {
+        let items: [Item] = [1, 2, 3]
+        self.identifiedView = .init(items: items)
+        self.indexedView = .init(items: items)
+        self.listView = .init(items: items)
+    }
+}
+
+
+extension ContentView: StateSurfable {
+    static func body(store: Store<State, Action>) -> Self {
+        ContentView(store: store)
+    }
+}

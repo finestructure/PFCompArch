@@ -6,8 +6,26 @@
         "repositoryURL": "git@github.com:finestructure/CompArch.git",
         "state": {
           "branch": null,
-          "revision": "b3bbb247b18b29549e905e31e5a19ebc46d1cefb",
-          "version": "0.7.2"
+          "revision": "4df83f97f8650a57fc08d016a90081ee61874568",
+          "version": "0.7.3"
+        }
+      },
+      {
+        "package": "HistoryTransceiver",
+        "repositoryURL": "https://github.com/finestructure/HistoryTransceiver",
+        "state": {
+          "branch": null,
+          "revision": "7ea00f04e2b061d8fe65807611f63e07c25a0c0a",
+          "version": "0.0.9"
+        }
+      },
+      {
+        "package": "MultipeerKit",
+        "repositoryURL": "https://github.com/insidegui/MultipeerKit",
+        "state": {
+          "branch": null,
+          "revision": "3f430bc28e1426ba42cdaa8b19fb4d89ce6d1c3b",
+          "version": "0.1.2"
         }
       },
       {
